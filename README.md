@@ -11,5 +11,7 @@
   * Ability to view items in the DB
   * Ability to see the low inventory items
   * Ability to add new products to the DB
+3. Supervisor
+  *Supervisor doesn't work currently But it will add some more functionality
 
 
