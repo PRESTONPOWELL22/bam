@@ -29,6 +29,7 @@ var connection = mysql.createConnection({
 var orderArr = []
 var itemsArr = []
 
+// this is a constructor to turn the order into an object
 function Order (productId, units) {
   this.productId = productId
   this.units = units
@@ -52,21 +53,9 @@ connection.connect(function (e) {
       orderArr.push(order)
       orderCalc()
       updateData()
-      // proceed()
     })
   })
 })
-
-//   connection.end(function (e) {
-//     if (e) throw e
-//     pmpt(qs).then(function (r) {
-//       var order = new Order(r.productId, r.units)
-//       orderArr.push(order)
-//       console.log(orderArr)
-//       orderCalc()
-//     })
-//   })
-// })
 
 // this will calculate the price of the order
 function orderCalc () {
@@ -82,37 +71,23 @@ WHERE item_id = '${orderArr[0].productId}' ;
   })
 }
 
+// this will update the database to reflect inventory change
 function updateData () {
   var units = parseInt(orderArr[0].units)
   var inventory = itemsArr[orderArr[0].productId - 1].inventory
-  // console.log(units)
-  console.log(inventory)
   var result = inventory - units
-  console.log (result)
   var cmd = `
   UPDATE ITEMS
   SET instock = ${result}
   WHERE item_id = '${orderArr[0].productId}'
   `
-  connection.query(cmd, function (e, res) {
-    if (e) throw e
-    console.log('order was placed successfully')
-  })
-}
-
-function proceed () {
-  var q = {
-    type: 'list',
-    name: 'res',
-    message: 'are you ready to place your order',
-    choices: [
-      'yes',
-      'no'
-    ]
+  if (result > 0) {
+    connection.query(cmd, function (e, res) {
+      if (e) throw e
+      console.log('order was placed successfully')
+    })
   }
-  pmpt(q).then(function (r) {
-    if (r.res === 'yes') {
-      console.log('whats your creditcard #')
-    }
-  })
+  else {
+    console.log("there wasn't enough inventory to fill your order")
+  }
 }

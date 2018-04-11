@@ -1,3 +1,4 @@
+'use strict'
 // require npm packages for mysql
 var mysql = require('mysql')
 // require npm packages for inquirer
@@ -70,10 +71,8 @@ pmpt(qs).then(function (r) {
 
 // function to view the products
 function viewProducts () {
-  // console.log('you viewed products')
   connection.connect(function (e) {
     if (e) throw e
-    // console.log('connected!')
     connection.query('SELECT * FROM items', function (e, r) {
       if (e) throw e
       for (var i = 0; i < r.length; i++) { // this loop makes the data more readable for the user by adding it to a JSON obj
@@ -87,22 +86,15 @@ function viewProducts () {
     })
     connection.end(function (e) {
       if (e) throw e
-      // pmpt(qs).then(function (r) {
-      //   var order = new Order(r.productId, r.units)
-      //   orderArr.push(order)
-      //   console.log(orderArr)
-      // })
     })
   })
 }
 
 // function to view the low inventory items
 function lowInv () {
-  // console.log('you viewed products')
   connection.connect(function (e) {
     if (e) throw e
-    // console.log('connected!')
-    str = `
+    var str = `
     SELECT * FROM items
     WHERE instock < 100
     `
@@ -112,7 +104,6 @@ function lowInv () {
         itemsArr.push({
           id: r[i].item_id,
           product: r[i].product_name,
-          // price: r[i].price,
           inStock: r[i].instock
         })
       }
@@ -120,38 +111,13 @@ function lowInv () {
     })
     connection.end(function (e) {
       if (e) throw e
-      // pmpt(qs).then(function (r) {
-      //   var order = new Order(r.productId, r.units)
-      //   orderArr.push(order)
-      //   console.log(orderArr)
-      // })
     })
   })
-  console.log('you viewed low inventory')
 }
 
 // function to add inventory
 function addInv () {
-  // var reUp = `
-  // UPDATE items SET instock
-  // `
-  // connection.connect(function (e) {
-  //   if (e) throw e
-  //   connection.query('SELECT * FROM items', function (e, r) {
-  //     if (e) throw e
-  //     for (var i = 0; i < r.length; i++) { // this loop makes the data more readable for the user by adding it to a JSON obj
-  //       itemsArr.push({
-  //         id: r[i].item_id,
-  //         product: r[i].product_name,
-  //         price: r[i].price
-  //       })
-  //     }
-  //     console.log(itemsArr)
-  //   })
-  //   connection.end(function (e) {
-  //     if (e) throw e
-  //   })
-  // })
+  console.log('you added inventory')// I didn't finish this one
 }
 
 // function to add product
