@@ -11,7 +11,14 @@
   * Ability to view items in the DB
   * Ability to see the low inventory items
   * Ability to add new products to the DB
+  * *Ability to add inventory will be a future update*
 3. **Supervisor**
-  * Supervisor doesn't work currently But it will add some more functionality
+  * *Supervisor functionality will be added in the future*
+
+## Future Improvements
+* All Features Will Be Completed
+* Integration With a Fullstack Web App 
+* Ability To Take Credit Cards
+* User login and Authentication
 
 
